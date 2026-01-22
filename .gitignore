@@ -1,0 +1,14 @@
+# Visual Studio
+.vs/
+
+# ASP.NET
+**/bin/
+**/obj/
+
+# Angular
+node_modules/
+.angular/
+
+# Secrets
+**/appsettings.json
+**/appsettings.Development.json

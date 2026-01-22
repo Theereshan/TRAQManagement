@@ -1,0 +1,6 @@
+@TRAQManagement.API_HostAddress = http://localhost:5188
+
+GET {{TRAQManagement.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
