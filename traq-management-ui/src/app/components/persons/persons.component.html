@@ -1,0 +1,97 @@
+<h2>Persons</h2>
+
+<h3>Create Person</h3>
+
+<div style="margin-bottom: 15px;">
+  <input type="text"
+         placeholder="First Name"
+         [(ngModel)]="firstName"
+         style="margin-right: 10px;" />
+
+  <input type="text"
+         placeholder="Last Name"
+         [(ngModel)]="lastName"
+         style="margin-right: 10px;" />
+
+  <input type="text"
+         placeholder="ID Number"
+         [(ngModel)]="idNumber"
+         style="margin-right: 10px;" />
+
+  <button (click)="createPerson()">Create Person</button>
+</div>
+
+<p>{{ message }}</p>
+
+<hr />
+
+<h3>Search Person / Account</h3>
+
+<div style="margin-bottom: 15px;">
+  <input type="text"
+         placeholder="ID Number"
+         [(ngModel)]="searchIdNumber"
+         style="margin-right: 10px;" />
+
+  <input type="text"
+         placeholder="Surname"
+         [(ngModel)]="searchSurname"
+         style="margin-right: 10px;" />
+
+  <input type="text"
+         placeholder="Account Number"
+         [(ngModel)]="searchAccountNumber"
+         style="margin-right: 10px;" />
+
+  <button (click)="searchPersons()">Search</button>
+  <button (click)="loadPersons()" style="margin-left: 10px;">Clear</button>
+</div>
+
+<hr />
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>ID Number</th>
+    <th>Actions</th>
+  </tr>
+
+  <tr *ngFor="let p of persons">
+    <td>{{ p.personId }}</td>
+
+    <!-- ✅ If NOT editing -->
+    <ng-container *ngIf="editingPersonId !== p.personId; else editRow">
+      <td>{{ p.firstName }}</td>
+      <td>{{ p.lastName }}</td>
+      <td>{{ p.idNumber }}</td>
+
+      <td>
+        <!-- ✅ NEW VIEW BUTTON -->
+        <button [routerLink]="['/persons', p.personId]">View</button>
+
+
+        <button (click)="startEdit(p)" style="margin-right: 8px;">Edit</button>
+        <button (click)="deletePerson(p.personId)">Delete</button>
+      </td>
+    </ng-container>
+
+    <!-- ✅ If editing -->
+    <ng-template #editRow>
+      <td>
+        <input type="text" [(ngModel)]="editFirstName" />
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="editLastName" />
+      </td>
+      <td>
+        <input type="text" [(ngModel)]="editIdNumber" />
+      </td>
+      <td>
+        <button (click)="saveEdit()" style="margin-right: 8px;">Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </td>
+    </ng-template>
+  </tr>
+</table>

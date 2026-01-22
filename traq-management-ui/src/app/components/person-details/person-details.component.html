@@ -1,0 +1,61 @@
+<h2>Person Details</h2>
+
+<p style="color: green;">{{ message }}</p>
+
+<div *ngIf="person$ | async as person; else loadingBlock">
+
+  <button (click)="back()" style="margin-bottom: 15px;">⬅ Back to Persons</button>
+
+  <h3>Edit Person</h3>
+
+  <div style="margin-bottom: 15px;">
+    <label>First Name:</label>
+    <input type="text" [(ngModel)]="firstName" style="margin-right: 10px;" />
+
+    <label>Last Name:</label>
+    <input type="text" [(ngModel)]="lastName" style="margin-right: 10px;" />
+
+    <label>ID Number:</label>
+    <input type="text" [(ngModel)]="idNumber" style="margin-right: 10px;" />
+
+    <button (click)="savePerson(person.personId)">Save</button>
+  </div>
+
+  <hr />
+
+  <h3>Create Account</h3>
+
+  <div style="margin-bottom: 15px;">
+    <label>Account Number:</label>
+    <input type="text" [(ngModel)]="newAccountNumber" style="margin-right: 10px;" />
+
+    <button (click)="addAccount(person.personId)">Add Account</button>
+  </div>
+
+  <hr />
+
+  <h3>Accounts for {{ person.firstName }} {{ person.lastName }}</h3>
+
+  <table border="1" cellpadding="8" *ngIf="person.accounts?.length > 0; else noAccounts">
+    <tr>
+      <th>Account #</th>
+      <th>Status</th>
+      <th>Balance</th>
+    </tr>
+
+    <tr *ngFor="let acc of person.accounts">
+      <td>{{ acc.accountNumber }}</td>
+      <td>{{ acc.status?.statusName }}</td>
+      <td>{{ acc.balance }}</td>
+    </tr>
+  </table>
+
+  <ng-template #noAccounts>
+    <p>No accounts found for this person.</p>
+  </ng-template>
+
+</div>
+
+<ng-template #loadingBlock>
+  <p>Loading person details...</p>
+</ng-template>

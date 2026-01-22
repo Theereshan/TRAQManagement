@@ -1,0 +1,71 @@
+<h2>Accounts</h2>
+
+<p *ngIf="loading">Loading accounts...</p>
+
+<p style="color:red;" *ngIf="!loading && message">{{ message }}</p>
+
+<!-- ✅ CREATE ACCOUNT -->
+<div *ngIf="!loading" style="margin-bottom: 20px;">
+  <h3>Create Account</h3>
+
+  <label>Person ID:</label>
+  <input type="number" [(ngModel)]="personId" style="margin-right: 10px;" />
+
+  <label>Account Number:</label>
+  <input type="text" [(ngModel)]="accountNumber" style="margin-right: 10px;" />
+
+  <button (click)="createAccount()">Create</button>
+
+  <p>{{ message }}</p>
+</div>
+
+<hr />
+
+<!-- ✅ TRANSACTION SECTION -->
+<div *ngIf="!loading" style="margin-bottom: 20px;">
+  <h3>Make Transaction</h3>
+
+  <label>Account:</label>
+  <select [(ngModel)]="selectedAccountId" style="margin-right: 10px;">
+    <option [ngValue]="0">-- Select Account --</option>
+    <option *ngFor="let acc of accounts" [ngValue]="acc.accountId">
+      {{ acc.accountNumber }}
+    </option>
+  </select>
+
+  <label>Amount:</label>
+  <input type="number" [(ngModel)]="transactionAmount" style="margin-right: 10px;" />
+
+  <button (click)="createTransaction()">Submit Transaction</button>
+
+  <p>{{ messageTransaction }}</p>
+</div>
+
+<hr />
+
+<!-- ✅ TABLE -->
+<div *ngIf="!loading">
+  <h3>Accounts Table</h3>
+
+  <p *ngIf="accounts.length === 0">No accounts found.</p>
+
+  <table *ngIf="accounts.length > 0" border="1" cellpadding="8">
+    <tr>
+      <th>Account #</th>
+      <th>Owner</th>
+      <th>Status</th>
+      <th>Balance</th>
+      <th>Actions</th>
+    </tr>
+
+    <tr *ngFor="let acc of accounts">
+      <td>{{ acc.accountNumber }}</td>
+      <td>{{ acc.person?.firstName }} {{ acc.person?.lastName }}</td>
+      <td>{{ acc.status?.statusName }}</td>
+      <td>{{ acc.balance }}</td>
+      <td>
+        <button [routerLink]="['/accounts', acc.accountId]">View</button>
+      </td>
+    </tr>
+  </table>
+</div>
